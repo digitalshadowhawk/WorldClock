@@ -1,0 +1,17 @@
+#############################################################
+# Language file for the World Clock mod by Zachary Cook.    #
+# Language: en_US (American English)                        #
+#############################################################
+
+worldclock.configpanel.title=%s Settings
+worldclock.configpanel.info.world.text=Displays the World Clock.
+worldclock.configpanel.info.system.text=Displays the System Clock.
+worldclock.configpanel.info.visibility.text=Turns the clock on or off.
+worldclock.configpanel.button.visibletoggle.true.text=Visible: True
+worldclock.configpanel.button.visibletoggle.false.text=Visible: False
+worldclock.configpanel.button.worldtoggle.true.text=World Clock: True
+worldclock.configpanel.button.worldtoggle.false.text=World Clock: False
+worldclock.configpanel.button.systemtoggle.true.text=System Clock: True
+worldclock.configpanel.button.systemtoggle.false.text=System Clock: False
+
+key.clock.toggle=Toggle Clock
