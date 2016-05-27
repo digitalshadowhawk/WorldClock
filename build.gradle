@@ -37,6 +37,7 @@ litemod {
     json {
         name = "worldclock"
         mcversion = "1.9.4"
+        author = "Shadow_Hawk"
     }
 }
 
