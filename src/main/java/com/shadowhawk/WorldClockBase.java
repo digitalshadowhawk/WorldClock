@@ -1,6 +1,6 @@
 package com.shadowhawk;
 
-public class Clock {
+public class WorldClockBase {
 
 	/**
 	 * Size and position for the clock

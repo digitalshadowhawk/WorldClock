@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.analog;
 
 import static com.mumfrey.liteloader.gl.GL.GL_GREATER;
 import static com.mumfrey.liteloader.gl.GL.GL_QUADS;
@@ -10,6 +10,8 @@ import static com.mumfrey.liteloader.gl.GL.glEnableTexture2D;
 import static net.minecraft.client.renderer.vertex.DefaultVertexFormats.POSITION_TEX;
 
 import org.lwjgl.util.ReadableColor;
+
+import com.shadowhawk.WorldClockBase;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
@@ -23,7 +25,7 @@ import net.minecraft.util.ResourceLocation;
  *
  * @author Shadow_Hawk
  */
-public class AnalogClock extends Clock
+public class WorldClockAnalog extends WorldClockBase
 {
 	/**
 	 * This is the clock face resource, you need to create a resource location for any assets that you
@@ -68,19 +70,19 @@ public class AnalogClock extends Clock
     }
 	
 	
-	private ClockHands mcHands, sysHands;
+	private WorldClockAnalogHands mcHands, sysHands;
 	
 	/**
 	 * @param xPos X position for the clock
 	 * @param yPos Y position for the clock
 	 */
-	public AnalogClock(int xPos, int yPos)
+	public WorldClockAnalog(int xPos, int yPos)
 	{
 		this.setPosition(xPos, yPos);
 		this.setSize(64);
 		
-		this.mcHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, size, ReadableColor.GREY, ReadableColor.WHITE, true);
-		this.sysHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, size, ReadableColor.PURPLE, ReadableColor.PURPLE, ReadableColor.PURPLE, false);
+		this.mcHands = new WorldClockAnalogHands(Minecraft.getMinecraft(), xPos, yPos, size, ReadableColor.GREY, ReadableColor.WHITE, true);
+		this.sysHands = new WorldClockAnalogHands(Minecraft.getMinecraft(), xPos, yPos, size, ReadableColor.PURPLE, ReadableColor.PURPLE, ReadableColor.PURPLE, false);
 	}
 	
 	/**
@@ -88,7 +90,7 @@ public class AnalogClock extends Clock
 	 * 
 	 * @param minecraft Minecraft game instance
 	 */
-	public void render(Minecraft minecraft)
+	public void render(Minecraft minecraft, boolean systemClock, boolean worldClock)
 	{		
 		if (this.isVisible())
 		{
@@ -97,9 +99,9 @@ public class AnalogClock extends Clock
 			mcHands.calculateAngles(Minecraft.getMinecraft());
 			
 			// Then render the actual clock
-			if(LiteModWorldClock.instance.systemClock || LiteModWorldClock.instance.worldClock)
+			if(systemClock || worldClock)
 			{
-				this.renderClock(minecraft);
+				this.renderClock(minecraft, systemClock, worldClock);
 			}
 		}
 	}
@@ -109,17 +111,17 @@ public class AnalogClock extends Clock
 	 * 
 	 * @param minecraft Minecraft game instance
 	 */
-	private void renderClock(Minecraft minecraft)
+	private void renderClock(Minecraft minecraft, boolean systemClock, boolean worldClock)
 	{
 		// Render the face
 		this.renderClockFace(minecraft);
 		
 		// Render each of the hands
-		if(LiteModWorldClock.instance.systemClock)
+		if(systemClock)
 		{
 			sysHands.render();
 		}
-		if(LiteModWorldClock.instance.worldClock)
+		if(worldClock)
 		{
 			mcHands.render();
 		}
@@ -133,7 +135,7 @@ public class AnalogClock extends Clock
 	private void renderClockFace(Minecraft minecraft)
 	{
 		// Bind the texture resource
-		minecraft.getTextureManager().bindTexture(AnalogClock.CLOCKFACE);
+		minecraft.getTextureManager().bindTexture(WorldClockAnalog.CLOCKFACE);
 		
 		// Draw a rectangle using the currently bound texture
 		glDrawTexturedRect(this.xPos, this.yPos, this.size, this.size, 1, 1, 511, 511);
@@ -144,7 +146,7 @@ public class AnalogClock extends Clock
 	public void setSize(int size)
 	{
 		this.size  = Math.max(32, size);
-		this.mcHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, this.size, ReadableColor.GREY, ReadableColor.WHITE, true);
-		this.sysHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, this.size, ReadableColor.PURPLE, ReadableColor.PURPLE, ReadableColor.PURPLE, false);
+		this.mcHands = new WorldClockAnalogHands(Minecraft.getMinecraft(), xPos, yPos, this.size, ReadableColor.GREY, ReadableColor.WHITE, true);
+		this.sysHands = new WorldClockAnalogHands(Minecraft.getMinecraft(), xPos, yPos, this.size, ReadableColor.PURPLE, ReadableColor.PURPLE, ReadableColor.PURPLE, false);
 	}
 }

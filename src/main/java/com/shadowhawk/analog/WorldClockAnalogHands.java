@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.analog;
 
 import static com.mumfrey.liteloader.gl.GL.GL_ONE_MINUS_SRC_ALPHA;
 import static com.mumfrey.liteloader.gl.GL.GL_QUADS;
@@ -25,7 +25,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.util.math.MathHelper;
 
-public class ClockHands {	
+public class WorldClockAnalogHands {	
 	
 	/**
 	 * Draw an opaque rectangle
@@ -85,7 +85,7 @@ public class ClockHands {
 	private boolean isMinecraft;
 	private Minecraft minecraft;
 	
-	public ClockHands(Minecraft minecraft, int xPos, int yPos, int size, ReadableColor smallHandColor, ReadableColor largeHandColor, boolean isMinecraft)
+	public WorldClockAnalogHands(Minecraft minecraft, int xPos, int yPos, int size, ReadableColor smallHandColor, ReadableColor largeHandColor, boolean isMinecraft)
 	{
 		this.largeHandColour  = largeHandColor;   
 		this.smallHandColour  = smallHandColor;
@@ -99,7 +99,7 @@ public class ClockHands {
 		setSize();
 	}
 	
-	public ClockHands(Minecraft minecraft, int xPos, int yPos, int size, ReadableColor smallHandColor, ReadableColor largeHandColor, ReadableColor secondHandColor, boolean isMinecraft)
+	public WorldClockAnalogHands(Minecraft minecraft, int xPos, int yPos, int size, ReadableColor smallHandColor, ReadableColor largeHandColor, ReadableColor secondHandColor, boolean isMinecraft)
 	{
 		this(minecraft, xPos, yPos, size, smallHandColor, largeHandColor, isMinecraft);
 		this.secondHandColour = secondHandColor;

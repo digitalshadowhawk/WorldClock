@@ -14,6 +14,7 @@ import com.mumfrey.liteloader.modconfig.ConfigPanel;
 import com.mumfrey.liteloader.modconfig.ConfigStrategy;
 import com.mumfrey.liteloader.modconfig.ExposableOptions;
 import com.mumfrey.liteloader.util.log.LiteLoaderLogger;
+import com.shadowhawk.analog.WorldClockAnalog;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -54,7 +55,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 	/**
 	 * This is our instance of Clock which we will draw every tick
 	 */
-	private AnalogClock clock = new AnalogClock(10, 10);
+	private WorldClockAnalog clock = new WorldClockAnalog(10, 10);
 	
 	@Expose
 	@SerializedName("clock_size")
@@ -186,7 +187,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 			}
 			
 			// Render the clock			
-			this.clock.render(minecraft);
+			this.clock.render(minecraft, LiteModWorldClock.instance.systemClock, LiteModWorldClock.instance.worldClock);
 		}
 	}
 
