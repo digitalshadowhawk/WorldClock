@@ -3,6 +3,7 @@ package com.shadowhawk;
 import java.io.File;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.ReadableColor;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -56,6 +57,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 	 * This is our instance of Clock which we will draw every tick
 	 */
 	private WorldClockAnalog clock = new WorldClockAnalog(10, 10);
+	private WorldClockAMPMIndicator worldIndicator = new WorldClockAMPMIndicator(clock.getSize()+30, 30, ReadableColor.GREEN/*clock.mcHands.getColor()*/, Minecraft.getMinecraft());
 	
 	@Expose
 	@SerializedName("clock_size")
@@ -188,6 +190,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 			
 			// Render the clock			
 			this.clock.render(minecraft, LiteModWorldClock.instance.systemClock, LiteModWorldClock.instance.worldClock);
+			this.worldIndicator.render();
 		}
 	}
 

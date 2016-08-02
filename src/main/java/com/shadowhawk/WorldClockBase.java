@@ -1,5 +1,10 @@
 package com.shadowhawk;
 
+import java.util.Calendar;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.math.MathHelper;
+
 public class WorldClockBase {
 
 	/**
@@ -56,6 +61,31 @@ public class WorldClockBase {
 	public void setVisible(boolean visible)
 	{
 		this.visible = visible;
+	}
+	
+	protected boolean isDay(Minecraft minecraft)
+	{
+		long ticks = (minecraft.theWorld.getWorldTime() + 6000) % 24000;
+		if(MathHelper.floor_float(ticks * 0.001F)>= 12)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
+	protected boolean isDay(Calendar calendar)
+	{
+		if(calendar.get(Calendar.HOUR)>= 12)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 }

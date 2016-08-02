@@ -70,7 +70,7 @@ public class WorldClockAnalog extends WorldClockBase
     }
 	
 	
-	private WorldClockAnalogHands mcHands, sysHands;
+	public WorldClockAnalogHands mcHands, sysHands;
 	
 	/**
 	 * @param xPos X position for the clock

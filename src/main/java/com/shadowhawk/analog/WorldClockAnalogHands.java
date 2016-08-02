@@ -137,33 +137,6 @@ public class WorldClockAnalogHands {
 		this.secondHandAngle  = 360.0F * (0.0166F * second);
 	}
 	
-	@SuppressWarnings("unused")
-	private boolean isDay(Calendar calendar)
-	{
-		if(calendar.get(Calendar.HOUR)>= 12)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-	
-	@SuppressWarnings("unused")
-	private boolean isDay(Minecraft minecraft)
-	{
-		long ticks = (minecraft.theWorld.getWorldTime() + 6000) % 24000;
-		if(MathHelper.floor_float(ticks * 0.001F)>= 12)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-	
 	public void render(/*Minecraft minecraft*/)
 	{
 		if(isMinecraft)
@@ -211,5 +184,9 @@ public class WorldClockAnalogHands {
 		this.largeHandSize  = this.size * 0.38F;
 		this.secondHandSize = this.size * 0.35F;
 		this.handWidth = this.size / 64.0F;
+	}
+
+	public ReadableColor getColor() {
+		return this.largeHandColour;
 	}
 }
