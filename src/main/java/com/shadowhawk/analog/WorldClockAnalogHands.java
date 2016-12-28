@@ -124,13 +124,13 @@ public class WorldClockAnalogHands {
 	
 	void calculateAngles(Minecraft minecraft)
 	{
-	    long ticks = (minecraft.theWorld.getWorldTime() + 6000) % 12000;
+	    long ticks = (minecraft.world.getWorldTime() + 6000) % 12000;
 	    
 	    int hour, minute, second = 0;
 	    
-    	hour   = MathHelper.floor_float(ticks * 0.001F);
-    	minute = MathHelper.floor_float(ticks * 0.06F) % 60;
-		second = MathHelper.floor_float(ticks * 3.6F) % 60;
+    	hour   = MathHelper.floor(ticks * 0.001F);
+    	minute = MathHelper.floor(ticks * 0.06F) % 60;
+		second = MathHelper.floor(ticks * 3.6F) % 60;
 		
 		this.smallHandAngle  = 360.0F * (0.0833F * hour + 0.00138F * minute);
 		this.largeHandAngle  = 360.0F * (0.0166F * minute);

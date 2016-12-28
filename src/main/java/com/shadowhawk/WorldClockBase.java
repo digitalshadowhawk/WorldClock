@@ -65,14 +65,14 @@ public class WorldClockBase {
 	
 	protected boolean isDay(Minecraft minecraft)
 	{
-		long ticks = (minecraft.theWorld.getWorldTime() + 6000) % 24000;
-		if(MathHelper.floor_float(ticks * 0.001F)>= 12)
+		long ticks = (minecraft.world.getWorldTime() + 6000) % 24000;
+		if(MathHelper.floor(ticks * 0.001F)>= 12)
 		{
-			return false;
+			return true;
 		}
 		else
 		{
-			return true;
+			return false;
 		}
 	}
 	

@@ -22,37 +22,88 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class WorldClockAMPMIndicator extends WorldClockBase{
 	private int renderMode = 0;
-	private final ReadableColor baseColor = ReadableColor.LTGREY;
+	private final ReadableColor baseColor = ReadableColor.DKGREY;
 	private ReadableColor activeColor;
 	private ReadableColor color = baseColor;
-	private Object clockType;
+	private ReadableColor inverseColor;
+	private boolean isDay;
+	private boolean isMinecraft;
+	private Calendar calendar = null;
+	private int size = 64;
 	
-	WorldClockAMPMIndicator(int x, int y, ReadableColor activeColor, Object clockType)
+	WorldClockAMPMIndicator(int x, int y, ReadableColor activeColor)
 	{
 		this.xPos = x;
 		this.yPos = y;
 		this.activeColor = activeColor;
-		this.clockType = clockType;
+		this.isMinecraft = true;
+	}
+
+	WorldClockAMPMIndicator(int x, int y, ReadableColor activeColor, Calendar calendar)
+	{
+		this.xPos = x;
+		this.yPos = y;
+		this.activeColor = activeColor;
+		this.isMinecraft = false;
+		this.calendar = calendar;
+		this.isDay = isDay(calendar);
+	}
+	
+	public void setPos(int x, int y)
+	{
+		this.xPos = x;
+		this.yPos = y;
+	}
+	
+	public void setSize(int size)
+	{
+		this.size = size;
 	}
 	
 	public void render()
 	{
-		if((clockType instanceof Minecraft && isDay((Minecraft)clockType) || (clockType instanceof Calendar && isDay((Calendar)clockType))))
+		if(isMinecraft)
+		{
+			this.isDay = isDay(Minecraft.getMinecraft());
+		} else {
+			this.isDay = isDay(calendar);
+		}
+		float transparency = 1.0f;
+		float inverseTransparency = 0.2f;
+		if(this.isDay)
 		{
 			this.color = this.baseColor;
+			this.inverseColor = this.activeColor;
+			transparency = 0.2f;
+			inverseTransparency = 1.0f;
 		} else
 		{
 			this.color = this.activeColor;
+			this.inverseColor = this.baseColor;
+			transparency = 1.0f;
+			inverseTransparency = 0.2f;
 		}
-		drawFilledCircle(xPos, yPos, 5f);
+		drawFilledCircle(xPos, yPos, 5f / 64 * size, color, transparency);
 		if(renderMode == 0)
 		{
-			drawFilledCircle(xPos, yPos + 30, 5f);
+			drawFilledCircle(getNextCoords()[0], getNextCoords()[1], 5f/ 64 * size, inverseColor, inverseTransparency);
 		} else if(renderMode == 1)
 		{
-			drawFilledCircle(xPos + 10, yPos+5, 0.8f);
-			drawFilledCircle(xPos - 10, yPos+10, 0.8f);
+			drawFilledCircle(xPos + 10, yPos+5, 5f / 64 * size, inverseColor, inverseTransparency);
+			drawFilledCircle(xPos - 10, yPos+10, 5f / 64 * size, inverseColor, inverseTransparency);
 		}
+	}
+	
+	public float[] getNextCoords()
+	{
+		float[] returnValue = {xPos, yPos + (15f/ 64 * size)};
+		return returnValue;
+	}
+	
+	public float[] getNextCoords(float xPos, float yPos)
+	{
+		float[] returnValue = {xPos, yPos + (15f/ 64 * size)};
+		return returnValue;
 	}
 	
 	/*
@@ -64,13 +115,14 @@ public class WorldClockAMPMIndicator extends WorldClockBase{
 	 *	y (GLFloat) - the y position of the center point of the circle
 	 *	radius (GLFloat) - the radius that the painted circle will have
 	 */
-	public void drawFilledCircle(float x, float y, float radius){
+	public void drawFilledCircle(float x, float y, float radius, ReadableColor color, float transparency){
 		int triangleAmount = 20; //# of triangles used to draw circle
+		float processedTransparency = Math.min(1.0f, Math.max(0.0f, transparency));
 		glDisableBlend();
         glDisableTexture2D();
         glDisableCulling();
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glColor4f(color.getRed(), color.getGreen(), color.getBlue(), 1.0F);
+        glColor4f(color.getRed(), color.getGreen(), color.getBlue(), processedTransparency);
 		
 		Tessellator tessellator = Tessellator.getInstance();
 		VertexBuffer vertexBuffer = tessellator.getBuffer();
