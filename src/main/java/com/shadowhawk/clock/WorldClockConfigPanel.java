@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.clock;
 
 import org.lwjgl.input.Keyboard;
 

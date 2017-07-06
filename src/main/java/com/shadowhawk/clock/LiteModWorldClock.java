@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.clock;
 
 import java.io.File;
 
@@ -14,6 +14,8 @@ import com.mumfrey.liteloader.modconfig.ConfigPanel;
 import com.mumfrey.liteloader.modconfig.ConfigStrategy;
 import com.mumfrey.liteloader.modconfig.ExposableOptions;
 import com.mumfrey.liteloader.util.log.LiteLoaderLogger;
+import com.shadowhawk.clock.analog.AnalogClock;
+import com.shadowhawk.clock.digital.DigitalClock;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -31,7 +33,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 	public static LiteModWorldClock instance;
 	
 	public static final String MOD_NAME = "World Clock";
-	public static final String MOD_VERSION = "1.1.1";
+	public static final String MOD_VERSION = "1.2 Beta";
 	
 	  /**
 	 * This is a keybinding that we will register with the game and use to toggle the clock
@@ -43,13 +45,13 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 	  /** World Clock. */
 	  @Expose
 	  @SerializedName("world_clock")
-	  protected boolean worldClock = true;
+	public boolean worldClock = true;
 	  
 
 	  /** System Clock. */
 	  @Expose
 	  @SerializedName("system_clock")
-	  protected boolean systemClock = false;
+	public boolean systemClock = false;
 	  
 	  /** Digital Mode */
 	  @Expose

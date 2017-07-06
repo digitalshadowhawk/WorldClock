@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.clock.analog;
 
 import static com.mumfrey.liteloader.gl.GL.GL_GREATER;
 import static com.mumfrey.liteloader.gl.GL.GL_QUADS;
@@ -10,6 +10,9 @@ import static com.mumfrey.liteloader.gl.GL.glEnableTexture2D;
 import static net.minecraft.client.renderer.vertex.DefaultVertexFormats.POSITION_TEX;
 
 import org.lwjgl.util.ReadableColor;
+
+import com.shadowhawk.clock.Clock;
+import com.shadowhawk.clock.LiteModWorldClock;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;

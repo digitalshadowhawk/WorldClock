@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.clock.digital;
 
 import static com.mumfrey.liteloader.gl.GL.GL_ONE_MINUS_SRC_ALPHA;
 import static com.mumfrey.liteloader.gl.GL.GL_POLYGON;

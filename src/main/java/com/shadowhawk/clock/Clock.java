@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.clock;
 
 public class Clock {
 

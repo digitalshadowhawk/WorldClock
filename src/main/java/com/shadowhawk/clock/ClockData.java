@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.clock;
 
 import java.util.Calendar;
 
@@ -8,7 +8,7 @@ import net.minecraft.util.math.MathHelper;
 public class ClockData {
 	protected float xPos;
 
-	int size;
+	protected int size;
 
 	protected float yPos;
 	

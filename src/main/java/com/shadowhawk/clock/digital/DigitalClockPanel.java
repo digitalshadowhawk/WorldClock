@@ -1,6 +1,8 @@
-package com.shadowhawk;
+package com.shadowhawk.clock.digital;
 
 import org.lwjgl.util.ReadableColor;
+
+import com.shadowhawk.clock.ClockData;
 
 import net.minecraft.client.Minecraft;
 

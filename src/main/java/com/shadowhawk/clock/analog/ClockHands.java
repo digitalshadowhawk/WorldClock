@@ -1,4 +1,4 @@
-package com.shadowhawk;
+package com.shadowhawk.clock.analog;
 
 import static com.mumfrey.liteloader.gl.GL.GL_ONE_MINUS_SRC_ALPHA;
 import static com.mumfrey.liteloader.gl.GL.GL_QUADS;
@@ -17,6 +17,8 @@ import static com.mumfrey.liteloader.gl.GL.glTranslatef;
 import static net.minecraft.client.renderer.vertex.DefaultVertexFormats.POSITION;
 
 import org.lwjgl.util.ReadableColor;
+
+import com.shadowhawk.clock.ClockData;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
