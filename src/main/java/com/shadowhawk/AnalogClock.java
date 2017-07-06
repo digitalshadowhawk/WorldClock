@@ -143,7 +143,7 @@ public class AnalogClock extends Clock
     @Override
 	public void setSize(int size)
 	{
-		this.size  = Math.max(32, size);
+		super.setSize(size);
 		this.mcHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, this.size, ReadableColor.GREY, ReadableColor.WHITE, true);
 		this.sysHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, this.size, ReadableColor.PURPLE, ReadableColor.PURPLE, ReadableColor.PURPLE, false);
 	}

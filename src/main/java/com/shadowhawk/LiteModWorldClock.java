@@ -51,10 +51,16 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 	  @SerializedName("system_clock")
 	  protected boolean systemClock = false;
 	  
+	  /** Digital Mode */
+	  @Expose
+	  @SerializedName("digital_mode")
+	  protected boolean digitalMode = false;
+	  
 	/**
 	 * This is our instance of Clock which we will draw every tick
 	 */
 	private AnalogClock clock = new AnalogClock(10, 10);
+	private DigitalClock clock2 = new DigitalClock(10, 10);
 	
 	@Expose
 	@SerializedName("clock_size")
@@ -122,7 +128,9 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 		LiteLoader.getInput().registerKeyBinding(LiteModWorldClock.clockKeyBinding);
 		
 		this.clock.setSize(this.clockSize);
+		this.clock2.setSize(this.clockSize);
 		this.clock.setVisible(this.clockVisible);
+		this.clock2.setVisible(this.clockVisible);
 	}
 	
 	public boolean isVisible()
@@ -173,6 +181,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 				{
 					this.clockSize = (this.clockSize << 1) & 0x1FF;
 					this.clock.setSize(this.clockSize);
+					this.clock2.setSize(this.clockSize);
 					this.clockSize = this.clock.getSize();
 				}
 				else
@@ -186,13 +195,19 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 			}
 			
 			// Render the clock			
-			this.clock.render(minecraft);
+			if(!digitalMode)
+			{
+				this.clock.render(minecraft);
+			} else {
+				this.clock2.render(minecraft);
+			}
 		}
 	}
 
 	public void toggleVisibility()
 	{
 		this.clock.setVisible(!this.clock.isVisible());
+		this.clock2.setVisible(!this.clock2.isVisible());
 		this.clockVisible = this.clock.isVisible();
 	}
 

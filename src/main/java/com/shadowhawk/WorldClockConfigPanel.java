@@ -25,6 +25,7 @@ public class WorldClockConfigPanel extends Gui implements ConfigPanel {
   private GuiButton setVisible;
   private GuiButton worldClock;
   private GuiButton systemClock;
+  private GuiButton clockType;
   private GuiButton activeButton;
 
   /** Draw the configuration panel's elements every refresh. */
@@ -33,6 +34,7 @@ public class WorldClockConfigPanel extends Gui implements ConfigPanel {
     setVisible.drawButton(minecraft, mouseX, mouseY);
     worldClock.drawButton(minecraft, mouseX, mouseY);
     systemClock.drawButton(minecraft, mouseX, mouseY);
+    clockType.drawButton(minecraft, mouseX, mouseY);
 
   }
 
@@ -69,22 +71,28 @@ public class WorldClockConfigPanel extends Gui implements ConfigPanel {
 		  LiteModWorldClock.instance.toggleVisibility();
 		  setVisible.displayString = (I18n.format("worldclock.configpanel.button.visibletoggle."+LiteModWorldClock.instance.isVisible()+".text", new Object[0]));
 		  setVisible.playPressSound(minecraft.getSoundHandler());
-	 }
-	  
+	  }
 	  else if (worldClock.mousePressed(minecraft, mouseX, mouseY))
 	  {
 		  activeButton = worldClock;
 		  LiteModWorldClock.instance.worldClock = !LiteModWorldClock.instance.worldClock;
 		  worldClock.displayString = I18n.format("worldclock.configpanel.button.worldtoggle."+Boolean.toString(LiteModWorldClock.instance.worldClock)+".text", new Object[0]);
 	      worldClock.playPressSound(minecraft.getSoundHandler());
-    } 
-	  
-	  else if (systemClock.mousePressed(minecraft, mouseX, mouseY)) {
-      activeButton = systemClock;
-      LiteModWorldClock.instance.systemClock = !LiteModWorldClock.instance.systemClock;
-      systemClock.displayString = I18n.format("worldclock.configpanel.button.systemtoggle."+Boolean.toString(LiteModWorldClock.instance.systemClock)+".text", new Object[0]);
-      systemClock.playPressSound(minecraft.getSoundHandler());
-    } 
+	  } 
+	  else if (systemClock.mousePressed(minecraft, mouseX, mouseY))
+	  {
+		  activeButton = systemClock;
+		  LiteModWorldClock.instance.systemClock = !LiteModWorldClock.instance.systemClock;
+		  systemClock.displayString = I18n.format("worldclock.configpanel.button.systemtoggle."+Boolean.toString(LiteModWorldClock.instance.systemClock)+".text", new Object[0]);
+		  systemClock.playPressSound(minecraft.getSoundHandler());
+	  }
+	  else if (clockType.mousePressed(minecraft, mouseX, mouseY))
+	  {
+		  activeButton = clockType;
+		  LiteModWorldClock.instance.digitalMode = !LiteModWorldClock.instance.digitalMode;
+		  clockType.displayString = I18n.format("worldclock.configpanel.button.clocktype."+Boolean.toString(LiteModWorldClock.instance.digitalMode)+".text", new Object[0]);
+		  clockType.playPressSound(minecraft.getSoundHandler());
+	  }
   }
 
   /** On release of click, deactivate the selected button (if any). */
@@ -119,8 +127,11 @@ public class WorldClockConfigPanel extends Gui implements ConfigPanel {
         new GuiButton(id++, 10, SPACING * line++, I18n.format(
         		"worldclock.configpanel.button.worldtoggle."+LiteModWorldClock.instance.worldClock+".text", new Object[0]));
     systemClock = 
-    	new GuiButton(id++, 10, SPACING * line++, I18n.format(
-    		"worldclock.configpanel.button.systemtoggle."+Boolean.toString(LiteModWorldClock.instance.systemClock)+".text", new Object[0]));
+        	new GuiButton(id++, 10, SPACING * line++, I18n.format(
+        		"worldclock.configpanel.button.systemtoggle."+Boolean.toString(LiteModWorldClock.instance.systemClock)+".text", new Object[0]));
+    clockType = 
+        	new GuiButton(id++, 10, SPACING * line++, I18n.format(
+        		"worldclock.configpanel.button.clocktype."+Boolean.toString(LiteModWorldClock.instance.digitalMode)+".text", new Object[0]));
   }
 
   /** On each tick, nothing needs to be done. */

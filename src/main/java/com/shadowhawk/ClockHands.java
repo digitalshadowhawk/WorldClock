@@ -16,16 +16,13 @@ import static com.mumfrey.liteloader.gl.GL.glRotatef;
 import static com.mumfrey.liteloader.gl.GL.glTranslatef;
 import static net.minecraft.client.renderer.vertex.DefaultVertexFormats.POSITION;
 
-import java.util.Calendar;
-
 import org.lwjgl.util.ReadableColor;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
-import net.minecraft.util.math.MathHelper;
 
-public class ClockHands {	
+public class ClockHands extends ClockData{	
 	
 	/**
 	 * Draw an opaque rectangle
@@ -74,16 +71,9 @@ public class ClockHands {
 	 */
 	private ReadableColor smallHandColour, largeHandColour, secondHandColour;
 	
-	private int xPos;
-
-	int size;
-
-	private int yPos;
+	
 
 	private boolean hasSeconds;
-	
-	private boolean isMinecraft;
-	private Minecraft minecraft;
 	
 	public ClockHands(Minecraft minecraft, int xPos, int yPos, int size, ReadableColor smallHandColor, ReadableColor largeHandColor, boolean isMinecraft)
 	{
@@ -110,12 +100,7 @@ public class ClockHands {
 	}
 	void calculateAngles()
 	{
-	    Calendar calendar = Calendar.getInstance();
-		int hour, minute, second;
-    	hour   = calendar.get(Calendar.HOUR);
-    	minute = calendar.get(Calendar.MINUTE);
-    	second = calendar.get(Calendar.SECOND);
-	    
+	    super.updateTimes();
 		
 		this.smallHandAngle  = 360.0F * (0.0833F * hour + 0.00138F * minute);
 		this.largeHandAngle  = 360.0F * (0.0166F * minute);
@@ -124,44 +109,11 @@ public class ClockHands {
 	
 	void calculateAngles(Minecraft minecraft)
 	{
-	    long ticks = (minecraft.theWorld.getWorldTime() + 6000) % 12000;
-	    
-	    int hour, minute, second = 0;
-	    
-    	hour   = MathHelper.floor_float(ticks * 0.001F);
-    	minute = MathHelper.floor_float(ticks * 0.06F) % 60;
-		second = MathHelper.floor_float(ticks * 3.6F) % 60;
+	    super.updateTimes(minecraft);
 		
 		this.smallHandAngle  = 360.0F * (0.0833F * hour + 0.00138F * minute);
 		this.largeHandAngle  = 360.0F * (0.0166F * minute);
 		this.secondHandAngle  = 360.0F * (0.0166F * second);
-	}
-	
-	@SuppressWarnings("unused")
-	private boolean isDay(Calendar calendar)
-	{
-		if(calendar.get(Calendar.HOUR)>= 12)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
-	
-	@SuppressWarnings("unused")
-	private boolean isDay(Minecraft minecraft)
-	{
-		long ticks = (minecraft.theWorld.getWorldTime() + 6000) % 24000;
-		if(MathHelper.floor_float(ticks * 0.001F)>= 12)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
 	}
 	
 	public void render(/*Minecraft minecraft*/)
