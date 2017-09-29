@@ -1,11 +1,24 @@
 package com.shadowhawk.clock;
 
+import net.minecraft.client.Minecraft;
+
 public class Clock {
+
+	public Clock(float x, float y)
+	{
+		this.setPosition(xPos, yPos);
+		this.setSize(64);
+	}
+	
+	protected float xPos, yPos;
 
 	/**
 	 * Size and position for the clock
 	 */
-	protected int xPos, yPos, size;
+	protected float size;
+	
+	protected Clock nextClock = null;
+	public float[] nextClockCoords = {10, 10};
 	
 	/**
 	 * Whether the clock is currently visible
@@ -15,7 +28,7 @@ public class Clock {
 	/**
 	 * Get the current size
 	 */
-	public int getSize()
+	public float getSize()
 	{
 		return this.size;
 	}
@@ -29,13 +42,15 @@ public class Clock {
 	}
 	
 	/**
+	 * Set the location of the top left corner of the clock
+	 * 
 	 * @param xPos
 	 * @param yPos
 	 */
-	public void setPosition(int xPos, int yPos)
+	public void setPosition(float xPos, float yPos)
 	{
-		this.xPos = Math.max(0,  xPos);
-		this.yPos = Math.max(0,  yPos);
+		this.xPos = Math.max(10,  xPos);
+		this.yPos = Math.max(10,  yPos);
 	}
 	
 	/**
@@ -43,14 +58,13 @@ public class Clock {
 	 * 
 	 * @param size new size (min is 32)
 	 */
-	public void setSize(int size)
+	public void setSize(float size)
 	{
 		this.size  = Math.max(32, size);
 	}
 	
 	/**
 	 * Set whether the clock should be visible
-	 * 
 	 * @param visible new visibility setting
 	 */
 	public void setVisible(boolean visible)
@@ -58,4 +72,21 @@ public class Clock {
 		this.visible = visible;
 	}
 	
+	/**
+	 * Placeholder method, must overwrite
+	 * @param minecraft
+	 */
+	public void render(Minecraft minecraft)
+	{
+		
+	}
+	
+	public void updateNextClockCoords()
+	{
+		if(nextClock != null)
+		{
+			nextClock.xPos = nextClockCoords[0];
+			nextClock.yPos = nextClockCoords[1];
+		}
+	}
 }

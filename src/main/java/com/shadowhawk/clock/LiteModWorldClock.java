@@ -33,7 +33,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 	public static LiteModWorldClock instance;
 	
 	public static final String MOD_NAME = "World Clock";
-	public static final String MOD_VERSION = "1.2 Beta";
+	public static final String MOD_VERSION = "1.2.1 Beta";
 	
 	  /**
 	 * This is a keybinding that we will register with the game and use to toggle the clock
@@ -66,7 +66,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 	
 	@Expose
 	@SerializedName("clock_size")
-	private int clockSize = 64;
+	private float clockSize = 64;
 	
 	@Expose
 	@SerializedName("clock_visible")
@@ -181,7 +181,7 @@ public class LiteModWorldClock implements Tickable, PreRenderListener, Configura
 			{
 				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
 				{
-					this.clockSize = (this.clockSize << 1) & 0x1FF;
+					this.clockSize = ((int)this.clockSize << 1) & 0x1FF;
 					this.clock.setSize(this.clockSize);
 					this.clock2.setSize(this.clockSize);
 					this.clockSize = this.clock.getSize();

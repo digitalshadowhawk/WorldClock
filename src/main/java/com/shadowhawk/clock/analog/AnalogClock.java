@@ -13,10 +13,10 @@ import org.lwjgl.util.ReadableColor;
 
 import com.shadowhawk.clock.Clock;
 import com.shadowhawk.clock.LiteModWorldClock;
+import com.shadowhawk.clock.indicator.IndicatorArray;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.*;
 import net.minecraft.util.ResourceLocation;
 //import net.minecraft.util.math.MathHelper;
 
@@ -47,7 +47,7 @@ public class AnalogClock extends Clock
 	/**
      * Draw a rectangle using the currently bound texture
      */
-    static void glDrawTexturedRect(int x, int y, int width, int height, int u, int v, int u2, int v2)
+    static void glDrawTexturedRect(float x, float y, float width, float height, int u, int v, int u2, int v2)
     {
 		// Set the appropriate OpenGL modes
 		glDisableLighting();
@@ -61,7 +61,7 @@ public class AnalogClock extends Clock
         // We use the tessellator rather than drawing individual quads because it uses vertex arrays to
         // draw the quads more efficiently.
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer worldRenderer = tessellator.getBuffer();
+		BufferBuilder worldRenderer = tessellator.getBuffer();
         worldRenderer.begin(GL_QUADS, POSITION_TEX);
         worldRenderer.pos(x + 0,     y + height, 0).tex(u  * texMapScale, v2 * texMapScale).endVertex();
         worldRenderer.pos(x + width, y + height, 0).tex(u2 * texMapScale, v2 * texMapScale).endVertex();
@@ -79,11 +79,12 @@ public class AnalogClock extends Clock
 	 */
 	public AnalogClock(int xPos, int yPos)
 	{
-		this.setPosition(xPos, yPos);
-		this.setSize(64);
+		super(xPos, yPos);
 		
 		this.mcHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, size, ReadableColor.GREY, ReadableColor.WHITE, true);
 		this.sysHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, size, ReadableColor.PURPLE, ReadableColor.PURPLE, ReadableColor.PURPLE, false);
+		this.nextClock = new IndicatorArray(nextClockCoords[0], nextClockCoords[1]);
+		
 	}
 	
 	/**
@@ -103,6 +104,10 @@ public class AnalogClock extends Clock
 			if(LiteModWorldClock.instance.systemClock || LiteModWorldClock.instance.worldClock)
 			{
 				this.renderClock(minecraft);
+				if(nextClock != null)
+				{
+					nextClock.render(minecraft);
+				}
 			}
 		}
 	}
@@ -144,9 +149,16 @@ public class AnalogClock extends Clock
 
 	
     @Override
-	public void setSize(int size)
+	public void setSize(float scale)
 	{
-		super.setSize(size);
+    	super.setSize(scale);
+		this.nextClockCoords[0] = xPos + 0.90F * this.size;
+		this.nextClockCoords[1] = yPos + 0.16F * this.size;
+		updateNextClockCoords();
+		if(nextClock != null)
+		{
+			nextClock.setSize(scale * 1.7F);
+		}
 		this.mcHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, this.size, ReadableColor.GREY, ReadableColor.WHITE, true);
 		this.sysHands = new ClockHands(Minecraft.getMinecraft(), xPos, yPos, this.size, ReadableColor.PURPLE, ReadableColor.PURPLE, ReadableColor.PURPLE, false);
 	}

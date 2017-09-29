@@ -31,10 +31,10 @@ public class WorldClockConfigPanel extends Gui implements ConfigPanel {
   /** Draw the configuration panel's elements every refresh. */
   @Override
   public void drawPanel(ConfigPanelHost host, int mouseX, int mouseY, float partialTicks) {
-    setVisible.drawButton(minecraft, mouseX, mouseY);
-    worldClock.drawButton(minecraft, mouseX, mouseY);
-    systemClock.drawButton(minecraft, mouseX, mouseY);
-    clockType.drawButton(minecraft, mouseX, mouseY);
+    setVisible.drawButton(minecraft, mouseX, mouseY, partialTicks);
+    worldClock.drawButton(minecraft, mouseX, mouseY, partialTicks);
+    systemClock.drawButton(minecraft, mouseX, mouseY, partialTicks);
+    clockType.drawButton(minecraft, mouseX, mouseY, partialTicks);
 
   }
 

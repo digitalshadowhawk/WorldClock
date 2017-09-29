@@ -2,21 +2,27 @@ package com.shadowhawk.clock;
 
 import java.util.Calendar;
 
+import org.lwjgl.util.ReadableColor;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
 
 public class ClockData {
 	protected float xPos;
 
-	protected int size;
+	protected float scale;
 
 	protected float yPos;
 	
 	protected boolean isMinecraft;
 	protected Minecraft minecraft;
+	protected ReadableColor color;
 	
 	protected int hour, minute, second;
 	
+	/**
+	 * Common method to update times for system based clocks
+	 */
 	protected void updateTimes()
 	{
 		Calendar calendar = Calendar.getInstance();
@@ -25,6 +31,10 @@ public class ClockData {
     	second = calendar.get(Calendar.SECOND);
 	}
 	
+	/**
+	 * Common method to update times for in-game clocks
+	 * @param minecraft
+	 */
 	protected void updateTimes(Minecraft minecraft)
 	{
 		long ticks = (minecraft.world.getWorldTime() + 6000) % 12000;
@@ -34,8 +44,12 @@ public class ClockData {
 		second = MathHelper.floor(ticks * 3.6F) % 60;
 	}
 	
-	@SuppressWarnings("unused")
-	private boolean isDay(Calendar calendar)
+	/**
+	 * Method to determine whether it's afternoon or not (system)
+	 * @param calendar
+	 * @return False if afternoon, true otherwise
+	 */
+	protected boolean isDay(Calendar calendar)
 	{
 		if(calendar.get(Calendar.HOUR)>= 12)
 		{
@@ -47,17 +61,21 @@ public class ClockData {
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	private boolean isDay(Minecraft minecraft)
+	/**
+	 * Method to determine whether it's afternoon or not (in-game)
+	 * @param minecraft
+	 * @return False if afternoon, true otherwise
+	 */
+	protected boolean isDay(Minecraft minecraft)
 	{
 		long ticks = (minecraft.world.getWorldTime() + 6000) % 24000;
 		if(MathHelper.floor(ticks * 0.001F)>= 12)
 		{
-			return false;
+			return true;
 		}
 		else
 		{
-			return true;
+			return false;
 		}
 	}
 }

@@ -21,8 +21,7 @@ import org.lwjgl.util.ReadableColor;
 import com.shadowhawk.clock.ClockData;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.*;
 
 public class ClockHands extends ClockData{	
 	
@@ -40,7 +39,7 @@ public class ClockHands extends ClockData{
         
         // Draw the quad
 		Tessellator tessellator = Tessellator.getInstance();
-		VertexBuffer worldRenderer = tessellator.getBuffer();
+		BufferBuilder worldRenderer = tessellator.getBuffer();
         worldRenderer.begin(GL_QUADS, POSITION);
         worldRenderer.pos(x1, y2, 0).endVertex();
         worldRenderer.pos(x2, y2, 0).endVertex();
@@ -77,13 +76,13 @@ public class ClockHands extends ClockData{
 
 	private boolean hasSeconds;
 	
-	public ClockHands(Minecraft minecraft, int xPos, int yPos, int size, ReadableColor smallHandColor, ReadableColor largeHandColor, boolean isMinecraft)
+	public ClockHands(Minecraft minecraft, float xPos, float yPos, float size, ReadableColor smallHandColor, ReadableColor largeHandColor, boolean isMinecraft)
 	{
 		this.largeHandColour  = largeHandColor;   
 		this.smallHandColour  = smallHandColor;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.size = size;
+		this.scale = size;
 		this.minecraft = minecraft;
 		this.isMinecraft = isMinecraft;
 		
@@ -91,7 +90,7 @@ public class ClockHands extends ClockData{
 		setSize();
 	}
 	
-	public ClockHands(Minecraft minecraft, int xPos, int yPos, int size, ReadableColor smallHandColor, ReadableColor largeHandColor, ReadableColor secondHandColor, boolean isMinecraft)
+	public ClockHands(Minecraft minecraft, float xPos, float yPos, float size, ReadableColor smallHandColor, ReadableColor largeHandColor, ReadableColor secondHandColor, boolean isMinecraft)
 	{
 		this(minecraft, xPos, yPos, size, smallHandColor, largeHandColor, isMinecraft);
 		this.secondHandColour = secondHandColor;
@@ -146,7 +145,7 @@ public class ClockHands extends ClockData{
 		glPushMatrix();
 		
 		// Transform to the mid point of the clock
-		glTranslatef(this.xPos + (this.size / 2), this.yPos + (this.size / 2), 0);
+		glTranslatef(this.xPos + (this.scale / 2), this.yPos + (this.scale / 2), 0);
 		
 		// and rotate by the hand angle
 		glRotatef(angle, 0.0F, 0.0F, 1.0F);
@@ -161,9 +160,9 @@ public class ClockHands extends ClockData{
 	
 	public void setSize()
 	{
-		this.smallHandSize  = this.size * 0.25F;
-		this.largeHandSize  = this.size * 0.38F;
-		this.secondHandSize = this.size * 0.35F;
-		this.handWidth = this.size / 64.0F;
+		this.smallHandSize  = this.scale * 0.25F;
+		this.largeHandSize  = this.scale * 0.38F;
+		this.secondHandSize = this.scale * 0.35F;
+		this.handWidth = this.scale / 64.0F;
 	}
 }
